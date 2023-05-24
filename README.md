@@ -1044,15 +1044,25 @@ F5 硬件
 
   跳表跟红黑树相比而言，时间复杂度都是`O(nlogn)`，但是在实现上相对来说比较容易，添加、删除操作也比较高效，但红黑树添加或者删除节点的时候非有重新平衡的性能开销，而且在Redis 原作者在社区解答大家疑问的时候有说过用跳表只是觉得`实现方式比较简单`、`维护简单`，而且`查询范围方便`
 
+- 为什么 epoll 用红黑树不用跳表
+
 - 为什么MySQL 中用 B+ 树而不是用其他的 B 树、AVL 树
 
-- 为什么 epoll 用红黑树不用跳表
+- MySQL 数据库的日志有那些，有什么作用
+
+  - MySQL数据自身有 BinLog，记录了数据库的所有修改操作，以二进制的方式存储，一般可以用在数据的同步备份，数据恢复，增量备份，可以通过阿里的中间件**Canal框架**进行数据库的同步
+  - MySQL数据库引擎 `InnoDB` 支持事务，并且管理索引与数据，会有
+    - 事务日志（Transaction  Log）：记录数据库事务的开始、提交、回滚操作
+    - 回滚日志（Undo Log）：存储事务旧版本的数据，在事务回滚或者MVCC机制的时候，通过回滚日志，恢复到事务执行之前的数据
+    - 重做日志（Redo Log）：存储已经提交的事务所做的操作日志，写入重做日志都是以循环写入的方式，便于在崩溃的时候用于恢复数据，通过持久化到磁盘上来做到数据的持久性和一致性
 
 - SQL 查询的时候用主键查询快还是用索引查询快
 
 - 执行SQL的时候如何主动使用行级锁
 
-  MySQL 在隐式情况下，使用 Insert、Update、Delete 都是行级锁，如果要显式使用则可以使用`for update` 或`lock in share mode`
+  - MySQL 在隐式情况下，使用 Insert Into ... Select...、Update、Delete 都是行级锁
+
+  - 如果要显式使用则可以使用`for update` 或`lock in share mode`
 
 - Spring 中在什么情况下会导致注解失效
 
@@ -1061,10 +1071,13 @@ F5 硬件
 - 如何设计一个 RPC 框架
 
   - 注册中心
+    - 多级缓存（Eureka）
   - 网关
     - 熔断
     - 限流
     - 鉴权
+      - JWT
+      - OAuth 2.0
   - 配置中心
   - 微服务`RPC`框架
     - 接口服务层
@@ -1079,13 +1092,13 @@ F5 硬件
   
 - 平时都会用到哪些序列化引擎
 
-  JDK 自带的 Serializable（性能不是那么好）
+  - JDK 自带的 Serializable（性能不是那么好）
   
-  Dubbo 框架中的 Hession
+  - Dubbo 框架中的 Hession
   
-  Hive 中的 Kryo
+  - Hive 中的 Kryo
   
-  跨语言的 Hessian、ProtoBuf、ProtoStuff
+  - 跨语言的 Hessian、ProtoBuf、ProtoStuff
   
 - 序列化底层的实现原理
 
@@ -1109,11 +1122,11 @@ F5 硬件
 
 - BIO、NIO和AIO模型的区别
 
-  BIO：同步堵塞
+  - BIO：同步堵塞
 
-  NIO：BIO的升级版，非堵塞
+  - NIO：BIO的升级版，非堵塞
 
-  AIO：NIO的升级版，异步
+  - AIO：NIO的升级版，异步
 
 - 同步与异步、阻塞与非阻塞的区别
 
