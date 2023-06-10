@@ -1058,6 +1058,8 @@ F5 硬件
 
 - SQL 查询的时候用主键查询快还是用索引查询快
 
+  - 主键查询更快
+
 - 执行SQL的时候如何主动使用行级锁
 
   - MySQL 在隐式情况下，使用 Insert Into ... Select...、Update、Delete 都是行级锁
